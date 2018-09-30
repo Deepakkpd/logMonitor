@@ -3,7 +3,7 @@
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <html lang="en">
 <head>
-<title>Log Monitor App</title>
+<title>Deepak's Playground</title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -30,6 +30,10 @@
 				'${pageContext.request.contextPath}/processLog');
 		$('#indexForm').submit();
 	}
+	
+	$(document).ready(function(){
+	    $('[data-toggle="tooltip"]').tooltip();   
+	});
 </script>
 </head>
 <body>
@@ -57,40 +61,49 @@
 						<li>
 							<form class="form-inline my-2 my-lg-0">
 								<form:input class="form-control mr-lg-5" type="search"
-									path="logUrl" placeholder="Give the log file url with the file name here..."
-									aria-label="Search" style="width:180%;" />
+									path="logUrl" placeholder="Give the log file path with the file name here..."
+									aria-label="Search" style="width:180%;" 
+									data-toggle="tooltip" data-placement="bottom" title="eg: E:\Public\Logs\TestLogs.log"/>
 							</form>
 						</li>
 					</ul>
 					<ul class="nav navbar-nav mr-auto">
 						<li>
 							<button type="submit" class="btn btn-success"
-								onclick="logUrlSubmit();">GO</button>
+								onclick="logUrlSubmit();"><b>GO</b></button>
 						</li>
 					</ul>
 
 				</div>
 			</nav>
 
-
-
+<c:if test="${indexForm.invalidPath}">
+<br>
+<div class="alert alert-danger" style="width:18%; align:center;" id="myAlert">
+    <strong> Warning: </strong> Invalid log file path.
+  </div>
+  </c:if>
 <p>
 			<h4>List of Exception :</h4>
+			<c:if test="${not empty indexForm.exceptionList}">
 			<button type="button" class="btn btn-danger" data-toggle="collapse"
 				data-target="#demo">Click to see &nbsp;
-				<c:if test="${not empty indexForm.exceptionList}">
 				<i class="fa fa-thumbs-down" style="font-size:20px"></i>
-				</c:if>
-				<c:if test="${empty indexForm.exceptionList}">
-				<i class="fa fa-thumbs-up" style="font-size:20px"></i>
-				</c:if>
 				</button>
+				</c:if>
+			<c:if test="${empty indexForm.exceptionList}">
+			<button type="button" class="btn btn-success" data-toggle="collapse"
+				data-target="#demo">Click to see &nbsp;
+				<i class="fa fa-thumbs-up" style="font-size:20px"></i>
+				</button>
+				</c:if>
 			<div id="demo" class="collapse">
 				<c:if test="${not empty indexForm.exceptionList}">
 					<div class="container">
-						<c:forEach var="listValue" items="${indexForm.exceptionList}">
+						<c:forEach var="listValue" items="${indexForm.exceptionList} ">
 							<li class="list-group-item list-group-item-warning">${listValue}</li>
 						</c:forEach>
+						
 					</div>
 				</c:if>
 				<c:if test="${empty indexForm.exceptionList}">

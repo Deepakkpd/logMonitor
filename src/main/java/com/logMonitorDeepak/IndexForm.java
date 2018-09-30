@@ -7,6 +7,15 @@ public class IndexForm {
 	private String exceptionLog;
 	private List<String> exceptionList;
 	private Integer exceptionCount;
+	private boolean invalidPath;
+
+	public boolean isInvalidPath() {
+		return invalidPath;
+	}
+
+	public void setInvalidPath(boolean invalidPath) {
+		this.invalidPath = invalidPath;
+	}
 
 	public Integer getExceptionCount() {
 		return exceptionCount;

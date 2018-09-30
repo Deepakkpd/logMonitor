@@ -2,6 +2,7 @@ package com.logMonitorDeepak;
 
 import java.io.BufferedReader;
 import java.io.DataInputStream;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -21,6 +22,12 @@ public class Manager {
 		indexForm.setExceptionCount(null);
 		
 		try {
+			File file = new File(indexForm.getLogUrl());
+			if (file.exists()){
+				System.out.println("Exists");
+			}else {
+				System.out.println("Not exist");
+			}
 			// input file
 			FileInputStream fstream = new FileInputStream(indexForm.getLogUrl());
 
@@ -51,6 +58,7 @@ public class Manager {
 				indexForm.setExceptionCount(exceptionList.size());
 			}
 		} catch (Exception e) {
+			indexForm.setInvalidPath(true);
 			System.err.println("Error: " + e.getMessage());
 		}
 		
