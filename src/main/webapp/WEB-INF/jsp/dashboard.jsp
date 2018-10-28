@@ -34,16 +34,31 @@
 	$(document).ready(function(){
 	    $('[data-toggle="tooltip"]').tooltip();   
 	});
+	
+	function copyToClipboard() {
+		/* Get the text field */
+		  var copyText = document.getElementById("exceptionId");
+
+		  /* Select the text field */
+		  copyText.select();
+
+		  /* Copy the text inside the text field */
+		  document.execCommand("copy");
+
+		  /* Alert the copied text */
+		  alert("Copied the text: " + copyText.value);
+
+		}
 </script>
 </head>
 <body>
 	<form:form modelAttribute="indexForm" name="indexForm" id="indexForm"
 		action="/dashboard">
-		<div class="container-fluid">
+		<div class="form-group">
 
 			<nav class="navbar navbar-dark bg-dark">
 				<div class="container-fluid">
-					<a class="navbar-brand" href="#"><h4>Log Monitor App</h4></a>
+					<h3 style="color:white">Log Monitor App</h3>
 					<ul class="nav navbar-nav mr-auto">
 						<li><b style="font-size:19px;color:white">&nbsp;&nbsp;&nbsp;&nbsp;Number of Exceptions :&nbsp;</b>
 						<c:if test="${not empty indexForm.exceptionList}">
@@ -59,12 +74,10 @@
 					</ul>
 					<ul class="nav navbar-nav mr-auto">
 						<li>
-							<form class="form-inline my-2 my-lg-0">
 								<form:input class="form-control mr-lg-5" type="search"
 									path="logUrl" placeholder="Give the log file path with the file name here..."
 									aria-label="Search" style="width:180%;" 
 									data-toggle="tooltip" data-placement="bottom" title="eg: E:\Public\Logs\TestLogs.log"/>
-							</form>
 						</li>
 					</ul>
 					<ul class="nav navbar-nav mr-auto">
@@ -73,27 +86,30 @@
 								onclick="logUrlSubmit();"><b>GO</b></button>
 						</li>
 					</ul>
-
+   
+<ul class="nav navbar-nav mr-right">
+<li>
+<c:if test="${indexForm.invalidPath}"> 
+    <h4><span class="badge badge-warning">Invalid log file path. </span></h4>
+     </c:if>
+    </li>
+    </ul>
+ 
 				</div>
 			</nav>
+<div class="container-fluid">
 
-<c:if test="${indexForm.invalidPath}">
-<br>
-<div class="alert alert-danger" style="width:18%; align:center;" id="myAlert">
-    <strong> Warning: </strong> Invalid log file path.
-  </div>
-  </c:if>
-<p>
+
 			<h4>List of Exception :</h4>
 			<c:if test="${not empty indexForm.exceptionList}">
 			<button type="button" class="btn btn-danger" data-toggle="collapse"
-				data-target="#demo">Click to see &nbsp;
+				data-target="#demo">Click to see&nbsp;
 				<i class="fa fa-thumbs-down" style="font-size:20px"></i>
 				</button>
 				</c:if>
 			<c:if test="${empty indexForm.exceptionList}">
 			<button type="button" class="btn btn-success" data-toggle="collapse"
-				data-target="#demo">Click to see &nbsp;
+				data-target="#demo">Click to see&nbsp;
 				<i class="fa fa-thumbs-up" style="font-size:20px"></i>
 				</button>
 				</c:if>
@@ -114,11 +130,12 @@
 			</div>
 <p>
 			<div class="form-group">
-				<h4>Exception Logs :</h4>
-				<textarea class="form-control" rows="40" id="exception"
+				<h4>Exception Logs :</h4> 
+				<input type="button" value="Copy to clipboard" onclick="copyToClipboard();">
+				<textarea class="form-control" rows="250" id="exceptionId"
 					readonly="readonly" style="color: red; background-color: #e0ffff;">${indexForm.exceptionLog}</textarea>
 			</div>
-
+</div>
 		</div>
 	</form:form>
 </body>
