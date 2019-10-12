@@ -24,6 +24,9 @@
 	crossorigin="anonymous"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.js"></script>
+
 <script type="text/javascript">
 	function logUrlSubmit() {
 		$('#indexForm').attr('action',
@@ -33,6 +36,18 @@
 	
 	$(document).ready(function(){
 	    $('[data-toggle="tooltip"]').tooltip();   
+	});
+	
+	$(document).ready(function() {  
+		var t = $('#invalidPathID').val();
+		  if(t === "true"){
+		//	  $( "#dialog" ).dialog();
+			  $.alert({
+				  icon: 'fa fa-spinner fa-spin',
+				    title: 'Alert !',
+				    content: 'Invalid log file path !!!',
+				});
+		  }
 	});
 	
 	function copyToClipboard() {
@@ -87,18 +102,10 @@
 						</li>
 					</ul>
    
-<ul class="nav navbar-nav mr-right">
-<li>
-<c:if test="${indexForm.invalidPath}"> 
-    <h4><span class="badge badge-warning">Invalid log file path. </span></h4>
-     </c:if>
-    </li>
-    </ul>
- 
 				</div>
 			</nav>
 <div class="container-fluid">
-
+<form:hidden id="invalidPathID" path="invalidPath"/>
 
 			<h4>List of Exception :</h4>
 			<c:if test="${not empty indexForm.exceptionList}">
@@ -116,7 +123,7 @@
 			<div id="demo" class="collapse">
 				<c:if test="${not empty indexForm.exceptionList}">
 					<div class="container">
-						<c:forEach var="listValue" items="${indexForm.exceptionList} ">
+						<c:forEach var="listValue" items="${indexForm.exceptionList}">
 							<li class="list-group-item list-group-item-warning">${listValue}</li>
 						</c:forEach>
 						

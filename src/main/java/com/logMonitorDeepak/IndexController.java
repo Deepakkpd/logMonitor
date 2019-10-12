@@ -28,7 +28,7 @@ public class IndexController {
 		System.out.println("Entering /result");
 		System.out.println("log url::"+indexForm.getLogUrl()); 
 		try {
-			indexForm.setInvalidPath(false);
+			indexForm.setInvalidPath("false");
 			 manager.processLogs(indexForm);
 		} catch (Exception e) {
 			e.printStackTrace();

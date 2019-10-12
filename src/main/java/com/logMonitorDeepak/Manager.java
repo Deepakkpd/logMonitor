@@ -40,6 +40,7 @@ public class Manager {
 				if (strLine.contains("Exception")){        // keyword
 					broken = true;
 					buffer.append("\n"+strLine+"\n");
+					System.out.println("strLine:"+strLine);
 					exceptionList.add(strLine);
 				}
 
@@ -58,7 +59,7 @@ public class Manager {
 				indexForm.setExceptionCount(exceptionList.size());
 			}
 		} catch (Exception e) {
-			indexForm.setInvalidPath(true);
+			indexForm.setInvalidPath("true");
 			System.err.println("Error: " + e.getMessage());
 		}
 		
